@@ -23,6 +23,15 @@ class BuildFailureTest(unittest.TestCase):
                 build = root/'build/ntdll-unix'
                 build.mkdir(parents=True)
                 (build/'build.sh').write_text(source)
+                # Satisfy the unrelated code-generation prerequisite so both
+                # controls reach the compiler/archive behavior under test.
+                generator = root/'build/crypto-unix/gen_gnutls_symtab.sh'
+                generator.parent.mkdir(parents=True)
+                generator.write_text('#!/bin/sh\nexit 0\n')
+                generator.chmod(0o755)
+                wine_source = root/'wine/dlls/ntdll/unix/file.c'
+                wine_source.parent.mkdir(parents=True)
+                wine_source.write_text('/* fake compiler input */\n')
                 (root/'app/Madeira').mkdir(parents=True)
                 target = root/'app/Madeira/libntdll_unix.a'
                 target.write_bytes(b'known baseline')
