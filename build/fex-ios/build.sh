@@ -11,5 +11,7 @@ if [ ! -f "$B/CMakeCache.txt" ]; then
         -DBUILD_TESTING=OFF -DBUILD_THUNKS=OFF -DBUILD_FEXCONFIG=OFF -DBUILD_FEX_LINUX_TESTS=OFF \
         -DENABLE_FEX_ALLOCATOR=OFF -DENABLE_ASSERTIONS=OFF -DENABLE_CLANG_THUNKS=ON -DENABLE_CCACHE=ON
 fi
-cmake --build "$B" --target FEXCore FEXCore_Base
+# Xcode links AllocatorHooks through JemallocLibs. It is not a dependency of
+# the two static core targets (only of FEXCore_shared), so request it explicitly.
+cmake --build "$B" --target FEXCore FEXCore_Base JemallocLibs softfloat_3e
 ls "$B/FEXCore/Source/"*.a
