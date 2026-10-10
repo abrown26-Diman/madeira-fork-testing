@@ -3,6 +3,7 @@
 import importlib.util
 from pathlib import Path
 import plistlib
+import struct
 import tempfile
 import unittest
 
@@ -13,6 +14,25 @@ spec.loader.exec_module(verify)
 
 
 class PackageTest(unittest.TestCase):
+    def test_pe_architecture_contract_and_malformed_headers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder, machine in [('arm64ec-windows', 0x8664), ('aarch64-windows', 0xaa64), ('i386-windows', 0x14c)]:
+                (root/folder).mkdir()
+                data = bytearray(128)
+                data[:2] = b'MZ'
+                struct.pack_into('<I', data, 0x3c, 64)
+                data[64:68] = b'PE\0\0'
+                struct.pack_into('<H', data, 68, machine)
+                (root/folder/'ntdll.dll').write_bytes(data)
+            self.assertEqual(len(verify.validate_pe_farms(root)), 3)
+            (root/'aarch64-windows/ntdll.dll').write_bytes(data)
+            with self.assertRaisesRegex(ValueError, 'PE machine'):
+                verify.validate_pe_farms(root)
+            for broken in (b'', b'MZ', b'MZ'+bytes(58)+b'\xff\xff\xff\xff', data[:70]):
+                with self.subTest(data=broken), self.assertRaises(ValueError):
+                    verify.pe_machine(broken)
+
     def fixture(self, root):
         app, source = root/'app', root/'source'
         for name in verify.REQUIRED + ['nls/l_intl.nls', 'legal/NOTICE.txt']:

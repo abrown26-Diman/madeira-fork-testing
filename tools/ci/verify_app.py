@@ -7,6 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 import plistlib
+import struct
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,6 +26,30 @@ REQUIRED = [
     'i386-windows/ntdll.dll', 'i386-windows/kernel32.dll', 'i386-windows/d3d11.dll',
     'licenses/LICENSE-MADEIRA-GPL-3.0.txt', 'licenses/LICENSE-MADEIRA-EXCEPTION.txt',
 ]
+
+
+def pe_machine(data):
+    if len(data) < 64 or data[:2] != b'MZ':
+        raise ValueError('missing PE DOS header')
+    offset = struct.unpack_from('<I', data, 0x3c)[0]
+    if offset + 24 > len(data) or data[offset:offset+4] != b'PE\0\0':
+        raise ValueError('invalid or truncated PE header')
+    return struct.unpack_from('<H', data, offset + 4)[0]
+
+
+def validate_pe_farms(app):
+    result = {}
+    # Wine's ARM64EC images use AMD64 in the PE file header, as do the x64
+    # utilities in that folder. Machine alone does not prove ARM64EC metadata.
+    for folder, expected in [('arm64ec-windows', 0x8664), ('aarch64-windows', 0xaa64), ('i386-windows', 0x14c)]:
+        for path in sorted((app/folder).iterdir()):
+            if path.suffix.lower() not in ('.dll', '.exe', '.drv', '.acm', '.ocx'):
+                continue
+            machine = pe_machine(path.read_bytes())
+            if machine != expected:
+                raise ValueError(f'{path}: PE machine {machine:#x}, expected {expected:#x}')
+            result[path.relative_to(app).as_posix()] = hex(machine)
+    return result
 
 
 def validate_resources(app, source):
@@ -57,6 +82,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
     validate_resources(args.app, ROOT/'app/Madeira')
+    pe_machines = validate_pe_farms(args.app)
     native = ['Madeira', 'Frameworks/StikJIT.framework/StikJIT',
               'PlugIns/MadeiraJITHelper.appex/MadeiraJITHelper', 'd3d12/libmetalirconverter.dylib']
     evidence = {}
@@ -67,6 +93,7 @@ def main():
     files = {p.relative_to(args.app).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
              for p in sorted(args.app.rglob('*')) if p.is_file()}
     args.output.write_text(json.dumps({'schema_version': 1, 'sha256': files, 'native_dependencies': evidence,
+                                     'pe_file_machines': pe_machines,
                                      'signed_for_installation': False}, indent=2) + '\n')
 
 
