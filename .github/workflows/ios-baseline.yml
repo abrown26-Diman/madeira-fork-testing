@@ -49,16 +49,38 @@ jobs:
         run: |
           set -euo pipefail
           bash build/ci/bootstrap-wine.sh 2>&1 | tee work/ci/bootstrap-wine.txt
+      - name: Validate native FEX cross-configuration before LLVM build
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CC="$(xcrun --sdk macosx --find clang)"
+          export CXX="$(xcrun --sdk macosx --find clang++)"
+          bash build/fex-ios/build.sh --configure-only 2>&1 | tee work/ci/fex-configure.txt
       - name: Reconstruct and validate wineserver from source
         shell: bash
         run: |
           set -euo pipefail
           bash build/wineserver/build.sh 2>&1 | tee work/ci/wineserver.txt
+      - name: Identify LLVM cache inputs
+        id: llvm-key
+        run: bash build/ci/llvm-cache-key.sh
+      - name: Restore exact LLVM outputs
+        id: llvm-cache
+        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: work/llvm-ios-cache
+          key: ${{ steps.llvm-key.outputs.key }}
       - name: Bootstrap LLVM iOS and FreeType sources
         shell: bash
         run: |
           set -euo pipefail
           bash build/ci/bootstrap-libraries.sh 2>&1 | tee work/ci/bootstrap-libraries.txt
+      - name: Save verified LLVM outputs before application compilation
+        if: steps.llvm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: work/llvm-ios-cache
+          key: ${{ steps.llvm-key.outputs.key }}
       - name: Install Metal compiler component
         run: xcodebuild -downloadComponent MetalToolchain
       - name: Native build readiness
@@ -87,6 +109,10 @@ jobs:
             wine/build-*/config.log
             toolchains/llvm-*/CMakeCache.txt
             toolchains/llvm-*/CMakeFiles/CMakeConfigureLog.yaml
+            work/llvm-ios-cache/manifest.json
+            FEX/build-*/CMakeCache.txt
+            FEX/build-*/CMakeFiles/CMakeConfigureLog.yaml
+            FEX/build-*/CMakeFiles/*/CMakeSystem.cmake
             work/DerivedData/Logs/Build/
           retention-days: 14
       - name: Unsigned package (only after successful native build)

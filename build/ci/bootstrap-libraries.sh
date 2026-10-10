@@ -31,6 +31,13 @@ PY
 export CC="$(xcrun --sdk macosx --find clang)"
 export CXX="$(xcrun --sdk macosx --find clang++)"
 export CMAKE_BUILD_PARALLEL_LEVEL="${CMAKE_BUILD_PARALLEL_LEVEL:-3}"
+if [ -d work/llvm-ios-cache ]; then
+    # A bad cache fails visibly; never accept a partial or modified output set.
+    python3 tools/ci/cache_manifest.py verify work/llvm-ios-cache work/ci/llvm-cache-inputs.txt
+    test ! -e toolchains/llvm-ios-build
+    mkdir -p toolchains/llvm-ios-build
+    cp -R work/llvm-ios-cache/payload/. toolchains/llvm-ios-build/
+else
 cmake -S toolchains/llvm-project/llvm -B toolchains/llvm-host-build -G Ninja \
     -DCMAKE_OSX_SYSROOT="$(xcrun --sdk macosx --show-sdk-path)" \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
@@ -50,7 +57,16 @@ cmake -S toolchains/llvm-project/llvm -B toolchains/llvm-ios-build -G Ninja \
 # Same components as dxmt/src/airconv/meson.build: bitwriter + passes and their
 # transitive libraries. No unnecessary target backends or executable tools.
 cmake --build toolchains/llvm-ios-build --target LLVMBitWriter LLVMPasses
+fi
 for archive in toolchains/llvm-ios-build/lib/*.a; do
     xcrun lipo "$archive" -verify_arch arm64
 done
 shasum -a 256 toolchains/llvm-ios-build/lib/*.a > work/ci/llvm-ios-SHA256SUMS
+if [ ! -d work/llvm-ios-cache ] && [ -f work/ci/llvm-cache-inputs.txt ]; then
+    # Cache only generated headers and completed libraries, never object files
+    # or incremental-build state. Sources are re-fetched and hash-checked above.
+    mkdir -p work/llvm-ios-cache/payload/lib
+    cp -R toolchains/llvm-ios-build/include work/llvm-ios-cache/payload/
+    cp toolchains/llvm-ios-build/lib/*.a work/llvm-ios-cache/payload/lib/
+    python3 tools/ci/cache_manifest.py seal work/llvm-ios-cache work/ci/llvm-cache-inputs.txt
+fi
