@@ -1,0 +1,17 @@
+test_binary_hashes_identify_changes_without_claiming_build (test_audit_inputs.AuditTests.test_binary_hashes_identify_changes_without_claiming_build) ... ok
+test_nested_pin_and_dirty_tracking (test_audit_inputs.AuditTests.test_nested_pin_and_dirty_tracking) ... ok
+test_uninitialized_gitlink_does_not_resolve_parent_head (test_audit_inputs.AuditTests.test_uninitialized_gitlink_does_not_resolve_parent_head) ... ok
+test_compile_failure_preserves_archive_and_negative_control_detects_old_bug (test_build_safety.BuildFailureTest.test_compile_failure_preserves_archive_and_negative_control_detects_old_bug) ... ok
+test_complete_resources (test_package_resources.PackageTest.test_complete_resources) ... ok
+test_missing_wow64_core_rejected (test_package_resources.PackageTest.test_missing_wow64_core_rejected) ... ok
+test_proprietary_runtime_cannot_be_bundled_accidentally (test_package_resources.PackageTest.test_proprietary_runtime_cannot_be_bundled_accidentally) ... ok
+test_xcode_copy_of_stale_resource_rejected (test_package_resources.PackageTest.test_xcode_copy_of_stale_resource_rejected) ... ok
+test_compiler_or_objcopy_failure_preserves_existing_archive (test_wineserver_sources.WineserverSourcesTest.test_compiler_or_objcopy_failure_preserves_existing_archive) ... ok
+test_complete_and_replacements_not_duplicates (test_wineserver_sources.WineserverSourcesTest.test_complete_and_replacements_not_duplicates) ... ok
+test_missing_replacement_cannot_fall_back_to_old_object (test_wineserver_sources.WineserverSourcesTest.test_missing_replacement_cannot_fall_back_to_old_object) ... ok
+test_wine_addition_cannot_silently_go_unbuilt (test_wineserver_sources.WineserverSourcesTest.test_wine_addition_cannot_silently_go_unbuilt) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.124s
+
+OK

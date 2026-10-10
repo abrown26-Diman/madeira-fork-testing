@@ -1,5 +1,7 @@
 # First engineering milestone — 2026-10-10
 
+Milestone 0.3 continuation: see [the native-build execution report](MILESTONE_03_REPORT.md). The complete source-built wineserver archive now passes macOS/iOS build validation; the full app/IPA milestone is still in progress. The first milestone record below is retained.
+
 The first patch provides a pinned architecture/build audit, structured offline diagnostic reports, a repeatable compatibility/benchmark protocol and guarded CI. It preserves upstream runtime behavior and dependency revisions. **A reproducible native build and device baseline are still incomplete. No IPA or game-performance improvement is claimed.**
 
 ## Implemented

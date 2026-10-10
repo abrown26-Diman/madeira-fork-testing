@@ -1,6 +1,6 @@
-# Wineserver archive reconstruction — Milestone 0.3
+# Wineserver archive reconstruction â€” Milestone 0.3
 
-Status: source-complete recipe implemented; native validation is in progress. An archive compilation result is not an application link or a device test.
+Status: **native source reconstruction and archive validation passed** at `4351c1e` in [Actions run 38033705916](https://github.com/abrown26-Diman/madeira-fork-testing/actions/runs/38033705916). The overall run was subsequently cancelled deliberately to incorporate discovered FEX build-wrapper omissions before the long dependency build; its wineserver step and evidence upload completed successfully. An archive compilation result is not an application link or a device test.
 
 Baseline: Madeira `497f04430685bec284df536beff1a496cb7ff706`, Wine `257f271cfffed9f22f7987cac53bc00095d092fe` (11.4). No submodule revisions or runtime sources changed.
 
@@ -80,3 +80,11 @@ The script checks arm64 architecture on every object, exact ordered archive memb
 No output is staged until compilation, renaming and validation finish. Old partial-build command arguments request a full build, so an old object cannot silently survive. Failed builds preserve the existing app archive and their diagnostic directory. No build output cache is restored by CI.
 
 Reproduce on the selected macOS runner: install the workflow's host tools, run `bash build/ci/bootstrap-wine.sh`, then `bash build/wineserver/build.sh`. No signing identity or seed archive is required.
+
+## Verified archive result
+
+Xcode 27.0 (27A266a), Swift 6.4, iOS SDK 27.0, arm64 runner. All 48 source objects compiled, were renamed, and passed architecture checks. Exact membership is 48 objects plus Apple's `__.SYMDEF SORTED` index. Archive size: **1,310,968 bytes**. SHA-256: `b981908ab710935f755bc42166e8d54c3e09b138ac2558d535160a6cf3fcd882`, independently matched after artifact download. This identifies the measured artifact, not a guarantee that timestamps/path metadata make separate builds byte-identical.
+
+The global symbol listing contains 826 definitions and 181 symbols unresolved after subtracting cross-member definitions. App-specific external definitions are present in source: `fatal_error` and `g_wineserver_should_stop` in `app/Madeira/WineServerBridge.m`; `ios_wait_reg` in `build/ntdll-unix/server_ios.c`; `madsync_{close,enabled,ioctl,post}` in `build/madsync/madsync.c`; `winios_hidpad_{get_state,set_output}` in `app/Madeira/Winios/WiniosGamepad.c`. Remaining references are Darwin C/Mach/platform functions. Their final iOS executable link is still required; symbol classification alone is not link validation.
+
+Two pre-existing warnings remained: the main macro redefinition in `main_ios.c`, and a nested comment marker in `mapping_ios.c`. Neither was suppressed or changed. Complete symbol/member evidence is stored under `docs/evidence/milestone-03/`.

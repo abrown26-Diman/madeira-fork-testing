@@ -1,0 +1,149 @@
+Recorded 8ff57536468bcb548359325d2b2a9b0510e9a478, 24 gitlinks, 301 binary hashes.
+/Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+Apple metal version 32023.921 (metalfe-32023.921.6)
+Target: air64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /private/var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.1.266.1.cD7h9S/Metal.xctoolchain/usr/metal/current/bin
+info: downloading component rust-std
+gmp-6.3.0.tar.xz: OK
+gnutls-3.8.9.tar.xz: OK
+nettle-3.10.1.tar.gz: OK
+=== extracting gmp-6.3.0 ===
+=== configuring GMP ===
+=== building GMP ===
+GMP ok
+=== extracting nettle-3.10.1 ===
+=== configuring nettle ===
+=== building nettle ===
+nettle ok
+=== extracting gnutls-3.8.9 ===
+=== configuring GnuTLS ===
+=== building GnuTLS ===
+GnuTLS ok
+
+=== static libs in /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib ===
+-rw-r--r--  1 runner  staff   911800 Oct 10 07:42 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib/libgmp.a
+-rw-r--r--  1 runner  staff  4096856 Oct 10 07:45 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib/libgnutls.a
+-rw-r--r--  1 runner  staff  1147720 Oct 10 07:43 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib/libhogweed.a
+-rw-r--r--  1 runner  staff  1588672 Oct 10 07:43 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib/libnettle.a
+Non-fat file: /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/gnutls-ios/lib/libgnutls.a is architecture: arm64
+=== verifying sha256 ===
+=== extracting ffmpeg-7.1.1 ===
+=== configuring ffmpeg-7.1.1 ===
+=== building ===
+
+=== ffmpeg 7.1.1 installed (headers: /Users/runner/work/madeira-fork-testing/madeira-fork-testing/toolchains/ffmpeg-ios/include) ===
+-rw-r--r--  1 runner  staff  595856 Oct 10 07:45 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/app/Madeira/libavformat.a
+-rw-r--r--  1 runner  staff  721008 Oct 10 07:45 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/app/Madeira/libavcodec.a
+-rw-r--r--  1 runner  staff  121088 Oct 10 07:45 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/app/Madeira/libswresample.a
+-rw-r--r--  1 runner  staff  896520 Oct 10 07:45 /Users/runner/work/madeira-fork-testing/madeira-fork-testing/app/Madeira/libavutil.a
+  DECODER:  mp1 mp2 mp3 wmalossless wmapro wmav1 wmav2 xma1 xma2 pcm_f32le pcm_f64le pcm_s16le pcm_s24le pcm_s32le pcm_u8 
+  DEMUXER:  mov mp3 wav 
+  PARSER:   mpegaudio 
+  PROTOCOL: 
+  MUXER:    
+CMake Warning (deprecated) at CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- The C compiler identification is AppleClang 21.0.0.21000334
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found PkgConfig: /opt/homebrew/bin/pkg-config (found version "3.0.7")
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Configuring done (1.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/runner/work/madeira-fork-testing/madeira-fork-testing/build/freetype-ios/build
+[  2%] Building C object CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[  4%] Building C object CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[  6%] Building C object CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[  9%] Building C object CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[ 11%] Building C object CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[ 13%] Building C object CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[ 16%] Building C object CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[ 18%] Building C object CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[ 20%] Building C object CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[ 23%] Building C object CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[ 25%] Building C object CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[ 27%] Building C object CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[ 30%] Building C object CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[ 32%] Building C object CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[ 34%] Building C object CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[ 37%] Building C object CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[ 39%] Building C object CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[ 41%] Building C object CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[ 44%] Building C object CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[ 46%] Building C object CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[ 48%] Building C object CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[ 51%] Building C object CMakeFiles/freetype.dir/src/cff/cff.c.o
+[ 53%] Building C object CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[ 55%] Building C object CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[ 58%] Building C object CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+In file included from /Users/runner/work/madeira-fork-testing/madeira-fork-testing/research/freetype/src/gzip/ftgzip.c:99:
+In file included from /Users/runner/work/madeira-fork-testing/madeira-fork-testing/research/freetype/src/gzip/zutil.c:8:
+/Users/runner/work/madeira-fork-testing/madeira-fork-testing/research/freetype/src/gzip/zutil.h:172:11: warning: 'OS_CODE' macro redefined [-Wmacro-redefined]
+  172 | #  define OS_CODE 19
+      |           ^
+/Users/runner/work/madeira-fork-testing/madeira-fork-testing/research/freetype/src/gzip/zutil.h:143:11: note: previous definition is here
+  143 | #  define OS_CODE  7
+      |           ^
+[ 60%] Building C object CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[ 62%] Building C object CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[ 65%] Building C object CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[ 67%] Building C object CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[ 69%] Building C object CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[ 72%] Building C object CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[ 74%] Building C object CMakeFiles/freetype.dir/src/raster/raster.c.o
+1 warning generated.
+[ 76%] Building C object CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[ 79%] Building C object CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[ 81%] Building C object CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[ 83%] Building C object CMakeFiles/freetype.dir/src/svg/svg.c.o
+[ 86%] Building C object CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[ 88%] Building C object CMakeFiles/freetype.dir/src/type1/type1.c.o
+[ 90%] Building C object CMakeFiles/freetype.dir/src/type42/type42.c.o
+[ 93%] Building C object CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[ 95%] Building C object CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[ 97%] Building C object CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[100%] Linking C static library libfreetype.a
+[100%] Built target freetype
+Done: /Users/runner/work/madeira-fork-testing/madeira-fork-testing/build/freetype-ios/build/libfreetype.a
+-- The C compiler identification is AppleClang 21.0.0.21000334
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- The ASM compiler identification is AppleClang
+-- Found assembler: /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for include file gdb/jit-reader.h
+-- Looking for include file gdb/jit-reader.h - not found
+-- Clang version 21.0.0.21000334
+CMake Error at CMakeLists.txt:89 (string):
+  string no output variable specified
+
+
+CMake Error at CMakeLists.txt:115 (message):
+  Unsupported processor type .  If you believe this is in error, file an
+  issue.
+
+
+-- Configuring incomplete, errors occurred!

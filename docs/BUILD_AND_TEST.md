@@ -1,10 +1,14 @@
-# Build and test — Milestone 0.3 (in progress)
+# Build and test â€” Milestone 0.3 (in progress)
 
 No successful application build or IPA is claimed yet. The active branch is `engineering/native-ios-build`, based on `497f04430685bec284df536beff1a496cb7ff706`. Historical Milestone 0.2 findings below are retained as evidence; this section supersedes their build recipe.
 
 ## Native workflow
 
-`.github/workflows/ios-baseline.yml` runs on the GitHub-hosted `xcode-27` arm64 image and explicitly selects Xcode 27.0. The existing StikJIT interface was produced with Swift 6.4; a real Swift import check now precedes the dependency build. Runner images and Homebrew packages remain moving inputs, so this is not yet a bit-reproducibility claim. Actions are pinned, submodules are recursively checked out at recorded gitlinks, credentials are not persisted, and no object/archive cache is restored. Host/SDK/compiler/package-manager versions are uploaded on each attempt.
+`.github/workflows/ios-baseline.yml` runs on the GitHub-hosted `xcode-27` arm64 image and explicitly selects Xcode 27.0. The existing StikJIT interface was produced with Swift 6.4; a real Swift import check now precedes the dependency build. Runner images and Homebrew packages remain moving inputs, so this is not yet a bit-reproducibility claim. Actions are pinned, submodules are recursively checked out at recorded gitlinks, and credentials are not persisted. Host/SDK/compiler/package-manager versions are uploaded on each attempt.
+
+Only completed LLVM iOS libraries and generated headers are cached. The exact key hashes the source/patch/flags recipe, cache implementation, host architecture/OS, Xcode, compiler and linker binaries, macOS/iOS SDK identities/settings, CMake and Ninja versions. There are no fallback restore keys. Every restored file must match the recorded SHA-256 manifest, with no missing/extra files or symlinks, and archives must pass arm64 validation. Source archives are fetched and verified again even on a cache hit. No incremental object files or CMake build state are reused. A failed integrity check stops the build; remove the affected Actions cache before retrying. Successful LLVM outputs are saved before later application stages can fail.
+
+Run [38034106394](https://github.com/abrown26-Diman/madeira-fork-testing/actions/runs/38034106394) compiled LLVM iOS, wineserver, GMP, Nettle, GnuTLS, FFmpeg and FreeType. Native FEX configuration then failed because the wrapper supplied `CMAKE_OSX_ARCHITECTURES=arm64` without `CMAKE_SYSTEM_PROCESSOR`. These are separate CMake inputs: [target processor](https://cmake.org/cmake/help/latest/variable/CMAKE_SYSTEM_PROCESSOR.html) and [Apple architectures](https://cmake.org/cmake/help/latest/variable/CMAKE_OSX_ARCHITECTURES.html). The iOS wrapper now explicitly supplies both, and reconfigures failed caches. Windows ARM64EC retains its pinned MinGW toolchain's `arm64ec-w64-mingw32` processor and Windows system identity. No FEX source validation was altered. CI now configures native FEX before the expensive LLVM build and retains FEX CMake diagnostics.
 
 From a **fresh** macOS checkout with the workflow's host tools installed:
 
@@ -17,9 +21,9 @@ python3 tools/ci/audit_inputs.py --require-native --output work/ci/native-inputs
 PACKAGE_IPA=1 bash build/ci/build-ios.sh
 ```
 
-Bootstrap refuses existing Wine/toolchain source destinations instead of overlaying a stale build. On Windows, push the dedicated branch to the fork to execute these commands on Actions. No local Mac or Apple signing credentials are needed for the unsigned build. `build-ios.sh` requires the bootstraps and reconstructed wineserver to have succeeded. It runs the original dependency scripts, Wine PE builds, native Wine shims, FEX, DXMT, native D3D12, pairing, Dock tests and WoW64 builds before `xcodebuild` in Debug (upstream's tested runtime configuration). The initial DXMT combined archive is explicitly created using the documented libtool merge.
+Bootstrap refuses existing Wine/toolchain source destinations instead of overlaying a stale build. On Windows, push the dedicated branch to the fork to execute these commands on Actions. No local Mac or Apple signing credentials are needed for the unsigned build. `build-ios.sh` requires the bootstraps and reconstructed wineserver to have succeeded. It runs the original dependency scripts, Wine PE builds, native Wine shims, FEX, DXMT, native D3D12, pairing, Dock tests and WoW64 builds before `xcodebuild` in Debug (upstream's tested runtime configuration). FEX's existing iOS host compile/CRT switches are explicitly enabled for ARM64EC, and its native build requests the JemallocLibs and softfloat_3e targets that Xcode links. The initial DXMT combined archive is explicitly created using the documented libtool merge.
 
-Wineserver is built from 48 known source objects, with no seed archive: see [Wineserver construction](WINESERVER_BUILD.md). The previously listed `wine/build-macos/include/wine/version.h` dependency was an audit error; it has no consumer or generation rule in the pinned tree. `config.h` and actual widl headers are generated from Wine configure plus `make include/all`.
+Wineserver has passed native source compilation and archive validation on Xcode 27 (run 38033705916), using 48 known source objects and no seed archive: see [Wineserver construction](WINESERVER_BUILD.md). The previously listed `wine/build-macos/include/wine/version.h` dependency was an audit error; it has no consumer or generation rule in the pinned tree. `config.h` and actual widl headers are generated from Wine configure plus `make include/all`.
 
 ## New dependency provenance
 
