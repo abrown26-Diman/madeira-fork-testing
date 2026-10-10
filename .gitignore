@@ -20,6 +20,8 @@ research/Winlator-Ludashi/
 research/*.md
 
 # Build artifacts
+work/
+__pycache__/
 app/build/
 app/DerivedData/
 build/DerivedData/

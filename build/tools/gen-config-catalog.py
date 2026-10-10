@@ -201,7 +201,9 @@ def scan():
         out = subprocess.run(["git", "-C", base, "ls-files", "--"] + dirs,
                              capture_output=True, text=True).stdout.split()
         for rel in out:
-            path = os.path.normpath(os.path.join(repo, rel))
+            # Catalog paths and app/ priority must be identical on Windows and
+            # POSIX hosts. Python accepts '/' for opening files on Windows too.
+            path = os.path.normpath(os.path.join(repo, rel)).replace("\\", "/")
             if not path.endswith(EXT) or any(s in path for s in SKIP):
                 continue
             try:

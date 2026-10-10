@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Madeira Converter Exception: see LICENSE-EXCEPTION.md
+"""Record actual revisions and missing build inputs without invoking a build."""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import platform
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[2]
+OPTIONAL_LINUX = {"FEX/External/fex-posixtest-bins", "FEX/External/fex-gvisor-tests-bins", "FEX/External/fex-gcc-target-tests-bins"}
+# These inputs are consumed by upstream scripts but are not all bootstrapped by them.
+NATIVE_INPUTS = {
+    "toolchains/llvm-mingw-20260421-ucrt-macos-universal/bin/arm64ec-w64-mingw32-clang": "Pinned LLVM-MinGW archive in docs/BUILDING.md",
+    "toolchains/llvm-ios-build/include/llvm/Config/llvm-config.h": "Configured iOS LLVM; docs/BUILDING.md has an unverified recipe",
+    "toolchains/llvm-ios-build/lib/libLLVMCore.a": "Built iOS LLVM, not host LLVM",
+    "toolchains/llvm-project/llvm/CMakeLists.txt": "Pinned LLVM source matching the iOS libraries",
+    "wine/build-macos/include/config.h": "Missing documented bootstrap for the Wine host configuration",
+    "wine/build-macos/include/wine/version.h": "Generated Wine headers required by native code",
+    "wine/build-arm64ec/include/dwrite.h": "Wine widl-generated ARM64EC headers",
+    "research/freetype/include/ft2build.h": "FreeType 2.13.3 source; build/freetype-ios/build.sh",
+    "app/Madeira/libwineserver.a": "BLOCKER: build/wineserver/build.sh updates a pre-existing archive; no clean base recipe",
+    "app/Madeira/d3d12/libmetalirconverter.dylib": "Tracked Apple converter; verify with build/madeira-d3d12/deps.sh",
+    "app/Frameworks/StikJIT.xcframework/ios-arm64/StikJIT.framework/StikJIT": "Tracked JIT framework; source rebuild provenance remains an audit item",
+}
+
+
+def git(root, *args):
+    return subprocess.check_output(["git", "-c", "core.longpaths=true", "-C", str(root), *args], text=True, encoding="utf-8", stderr=subprocess.PIPE).strip()
+
+
+def revisions(root, prefix=""):
+    records = []
+    for line in git(root, "ls-tree", "-r", "HEAD").splitlines():
+        meta, path = line.split("\t", 1)
+        mode, kind, sha = meta.split()
+        if mode != "160000":
+            continue
+        full = prefix + path
+        child = root / path
+        # rev-parse alone would accidentally resolve the parent when uninitialized.
+        initialized = (child / ".git").exists()
+        actual = git(child, "rev-parse", "HEAD") if initialized else None
+        dirty = bool(git(child, "status", "--porcelain", "--untracked-files=no", "--ignore-submodules=all")) if initialized else None
+        records.append(dict(path=full, expected=sha, actual=actual, dirty=dirty, optional_linux_tests=full in OPTIONAL_LINUX))
+        if initialized:
+            records.extend(revisions(child, full + "/"))
+    return records
+
+
+def inspect(root):
+    deps = revisions(root)
+    inputs = [{"path": path, "present": (root/path).is_file(), "remediation": reason} for path, reason in NATIVE_INPUTS.items()]
+    artifacts = []
+    for folder in ["app/Madeira/arm64ec-windows", "app/Madeira/aarch64-windows", "app/Madeira/d3d12"]:
+        for path in sorted((root/folder).glob("*")):
+            if path.is_file() and path.suffix.lower() in {".dll", ".exe", ".dylib"}:
+                digest = hashlib.sha256()
+                with path.open("rb") as handle:
+                    for block in iter(lambda: handle.read(1024 * 1024), b""):
+                        digest.update(block)
+                artifacts.append({"path": path.relative_to(root).as_posix(), "sha256": digest.hexdigest()})
+    return dict(schema_version=1, commit=git(root, "rev-parse", "HEAD"),
+                tracked_changes=git(root, "status", "--porcelain", "--untracked-files=no", "--ignore-submodules=all").splitlines(),
+                host=platform.system(), dependencies=deps, native_inputs=inputs, bundled_binary_hashes=artifacts,
+                native_build_executed=False,
+                note="Presence and hashes do not establish that bundled binaries were built from these sources. Native readiness is necessary, not sufficient.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--require-native", action="store_true")
+    parser.add_argument("--allow-missing-linux-tests", action="store_true")
+    args = parser.parse_args()
+    report = inspect(ROOT)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    bad = [r for r in report["dependencies"] if r["actual"] != r["expected"] or r["dirty"]]
+    if args.allow_missing_linux_tests:
+        bad = [r for r in bad if not (r["optional_linux_tests"] and r["actual"] is None)]
+    for row in bad:
+        print(f"ERROR dependency mismatch/uninitialized/dirty: {row['path']}")
+    missing = [r for r in report["native_inputs"] if not r["present"]]
+    for row in missing:
+        print(f"MISSING {row['path']}: {row['remediation']}")
+    print(f"Recorded {report['commit']}, {len(report['dependencies'])} gitlinks, {len(report['bundled_binary_hashes'])} binary hashes.")
+    if args.require_native and platform.system() != "Darwin":
+        print("ERROR native compilation requires macOS and Xcode; Windows analysis is supported.")
+    return 1 if bad or (args.require_native and (missing or platform.system() != "Darwin")) else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

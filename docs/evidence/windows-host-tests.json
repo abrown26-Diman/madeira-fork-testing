@@ -1,0 +1,454 @@
+{
+  "date": "2026-10-10",
+  "host": "Windows",
+  "native_build_executed": false,
+  "counts": {
+    "BLOCKED": 58,
+    "PASS": 3,
+    "PARTIAL": 2
+  },
+  "results": [
+    {
+      "test": "check-audio-downmix.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-audio-wow64.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-cfg-early-docs.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "No host C compiler; subprocess receives a null compiler path."
+    },
+    {
+      "test": "check-cfg-game.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "No host C compiler; subprocess receives a null compiler path."
+    },
+    {
+      "test": "check-child-desktop.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-child-ntdll-alias.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-config-catalog.py",
+      "exit_code": 0,
+      "original_exit_code": 1,
+      "note": "Initial Windows path-separator failure fixed; retest passes, generated Swift unchanged.",
+      "classification": "PASS",
+      "reason": "All assertions in this check completed."
+    },
+    {
+      "test": "check-control-presets.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-d3d12-tiled.py",
+      "exit_code": 0,
+      "seconds": 0.06,
+      "classification": "PARTIAL",
+      "reason": "SKIP: no host C compiler for the tiling harness"
+    },
+    {
+      "test": "check-d3d9-splitlock.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-d9-upload-commit.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-components.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-contract.py",
+      "exit_code": 1,
+      "seconds": 0.17,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-gdi-section.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-installers.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-path.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "Windows cannot create the POSIX Wine dosdevices/c: symlink path."
+    },
+    {
+      "test": "check-dock-report.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-dock-start-screen.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-ec-conhost.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-fastsync.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "No host C compiler; static assertions pass but the required compiled harness cannot run."
+    },
+    {
+      "test": "check-filtering-cap.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-free-delay.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-frontend.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-gamepad.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-hardware-input.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-hidpad.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-hw-registry.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "ok   ios_hw_key creates each missing level REG_OPTION_VOLATILE (inside the test region); FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-iat-sync-owner.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-image-reload.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-image-retire.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-jit-method.py",
+      "exit_code": 0,
+      "seconds": 0.05,
+      "classification": "PASS",
+      "reason": "All assertions in this check completed."
+    },
+    {
+      "test": "check-jit-network.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-jit-pairing.py",
+      "exit_code": 0,
+      "seconds": 0.06,
+      "classification": "PARTIAL",
+      "reason": "SKIP: cargo not on PATH, library tests not run"
+    },
+    {
+      "test": "check-kmt-adapter.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-launch-routing.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-lazy-windows.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-library-api.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-library-groups.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-library-sections.py",
+      "exit_code": 0,
+      "seconds": 0.03,
+      "classification": "PASS",
+      "reason": "All assertions in this check completed."
+    },
+    {
+      "test": "check-nav-keys.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-nsi-network.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "build = subprocess.run([CC, '-std=gnu11', '-Wall', '-Wno-unused-function', '-Wno-missing-braces',; FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-onboarding.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "PASS: LocalDevVPN's page sends a missing LocalDevVPN to the App Store, and can be skipped; FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-pad-output.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-readonly-link.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-runtime-settings.py",
+      "exit_code": 1,
+      "seconds": 0.05,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-scene-batching.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-section-abort.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-small-va-band.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-stale-heal-owner.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-steam-cloud.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "PASS: keeping this device's side leaves a missing save missing instead of uploading nothing; FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-steam-games.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-steam-library.py",
+      "exit_code": 1,
+      "seconds": 0.12,
+      "classification": "BLOCKED",
+      "reason": "Python compression module unavailable; test requires Python 3.14."
+    },
+    {
+      "test": "check-steam-signin-native.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-swap-coverage.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-touch-gamepad.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-unixlib-binder.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-wg-parser.py",
+      "exit_code": 1,
+      "seconds": 0.08,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-win32u-zero-bits.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-wine-mono.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-wma-decoder.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "SKIP-FAIL: C:\\Users\\Austin\\Documents\\Codex\\2026-10-10\\project-ios-windows-gaming-compatibility-and\\outputs\\Madeira\\wine\\build-macos\\include\\config.h is missing; point MADEIRA_WINE_BUILD at a configured Wine tree"
+    },
+    {
+      "test": "check-wow-context.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-wow-cpu-area.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    },
+    {
+      "test": "check-wow-sweep.py",
+      "exit_code": 1,
+      "seconds": 0.06,
+      "classification": "BLOCKED",
+      "reason": "FileNotFoundError: [WinError 2] The system cannot find the file specified"
+    }
+  ]
+}

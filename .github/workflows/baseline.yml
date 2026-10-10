@@ -1,0 +1,67 @@
+name: Instrumented baseline checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.14'
+      - name: Diagnostic behavior and build failure injection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/ci
+          python -m unittest discover -s tests/diagnostics -v 2>&1 | tee work/ci/diagnostics.txt
+          python -m unittest discover -s tests/ci -v 2>&1 | tee work/ci/build-safety.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: host-checks-${{ matrix.os }}
+          path: work/ci/
+          retention-days: 14
+
+  source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.14'
+      - name: Record pinned dependencies and missing native inputs
+        run: python tools/ci/audit_inputs.py --output work/ci/source-inputs.json
+      - name: Existing source and portable graphics checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tests/host/check-jit-method.py 2>&1 | tee work/ci/jit-method.txt
+          python tests/host/check-library-sections.py 2>&1 | tee work/ci/library-sections.txt
+          python tests/host/check-config-catalog.py 2>&1 | tee work/ci/config-catalog.txt
+          python tests/host/check-d3d12-tiled.py 2>&1 | tee work/ci/d3d12-tiled.txt
+          bash tests/dxmt/build-bcn-host-test.sh 2>&1 | tee work/ci/bcn.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: source-audit
+          path: work/ci/
+          retention-days: 14

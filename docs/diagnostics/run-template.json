@@ -1,0 +1,18 @@
+{
+  "game": null,
+  "executable": null,
+  "launch_route": null,
+  "device_model": null,
+  "ios_version": null,
+  "runtime_version": null,
+  "build_commit": null,
+  "settings": {},
+  "resolution": null,
+  "test_scene": null,
+  "test_duration_seconds": null,
+  "thermal_start": null,
+  "thermal_end": null,
+  "jit_method": null,
+  "container": null,
+  "notes": null
+}

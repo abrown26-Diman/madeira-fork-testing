@@ -203,6 +203,15 @@ echo "Results: $SUCCEEDED succeeded, $FAILED failed"
 if [ -n "$FAILED_FILES" ]; then
     echo "Failed:$FAILED_FILES"
 fi
+if [ "$FAILED" -gt 0 ]; then
+    # A previous build may have left valid .o files. Never archive those after
+    # a compiler failure: that can report success while shipping stale code.
+    for name in $FAILED_FILES; do
+        cat "$OBJ_DIR/$name.err" >&2
+    done
+    echo "ERROR: ntdll compilation failed; existing archives were not updated" >&2
+    exit 1
+fi
 
 echo ""
 echo "=== Building libntdll_unix.a ==="
