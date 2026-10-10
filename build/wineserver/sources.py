@@ -3,6 +3,7 @@
 # Madeira Converter Exception: see LICENSE-EXCEPTION.md
 """Complete server object plan. Refuse unreviewed Wine source-list changes."""
 from pathlib import Path
+import argparse
 import re
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -39,6 +40,22 @@ def plan(root=ROOT):
     return rows
 
 
+def verify_members(members, rows):
+    # Apple ar lists its symbol index as a member; it is not a C object.
+    if not members or members[0] not in ('__.SYMDEF', '__.SYMDEF SORTED'):
+        raise ValueError('missing Apple archive symbol index')
+    expected = [name + '.o' for name, _ in rows]
+    if members[1:] != expected:
+        raise ValueError(f'archive object membership differs: expected {expected}, got {members[1:]}')
+
+
 if __name__ == "__main__":
-    for name, source in plan():
-        print(f"{name}\t{source}")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--verify-members', type=Path)
+    args = parser.parse_args()
+    rows = plan()
+    if args.verify_members:
+        verify_members(args.verify_members.read_text().splitlines(), rows)
+    else:
+        for name, source in rows:
+            print(f"{name}\t{source}")

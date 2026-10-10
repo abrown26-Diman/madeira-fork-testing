@@ -83,6 +83,7 @@ jobs:
             build/wineserver/obj/**/symbols.txt
             build/wineserver/obj/**/undefined.txt
             build/wineserver/obj/**/SHA256SUMS
+            build/wineserver/obj/**/libwineserver.a
             wine/build-*/config.log
             toolchains/llvm-*/CMakeCache.txt
             toolchains/llvm-*/CMakeFiles/CMakeConfigureLog.yaml

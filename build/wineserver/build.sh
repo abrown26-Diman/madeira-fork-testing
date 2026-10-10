@@ -94,8 +94,7 @@ while IFS=$'\t' read -r name src; do
 done < "$OBJ_DIR/sources.tsv"
 xcrun ar rcs "$OBJ_DIR/libwineserver.a" "${OBJECTS[@]}"
 xcrun ar t "$OBJ_DIR/libwineserver.a" > "$OBJ_DIR/members.txt"
-cut -f1 "$OBJ_DIR/sources.tsv" | sed 's/$/.o/' > "$OBJ_DIR/expected-members.txt"
-diff -u "$OBJ_DIR/expected-members.txt" "$OBJ_DIR/members.txt"
+python3 "$BUILD_DIR/sources.py" --verify-members "$OBJ_DIR/members.txt"
 xcrun nm -g "$OBJ_DIR/libwineserver.a" > "$OBJ_DIR/symbols.txt"
 # Archive undefined symbols include cross-member and app/SDK imports. Preserve
 # them for the eventual executable link; an archive alone cannot resolve those.

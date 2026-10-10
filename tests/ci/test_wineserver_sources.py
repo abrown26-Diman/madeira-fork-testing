@@ -15,6 +15,15 @@ spec.loader.exec_module(sources)
 
 
 class WineserverSourcesTest(unittest.TestCase):
+    def test_apple_index_is_metadata_but_all_objects_are_exact(self):
+        rows = [('first', 'first.c'), ('second', 'second.c')]
+        members = ['__.SYMDEF SORTED', 'first.o', 'second.o']
+        sources.verify_members(members, rows)
+        for bad in (members[:-1], members + ['stale.o'], members + ['first.o'],
+                    members[:1] + members[1:][::-1], members[1:]):
+            with self.subTest(members=bad), self.assertRaises(ValueError):
+                sources.verify_members(bad, rows)
+
     def fixture(self, root):
         makefile = root/'wine/server/Makefile.in'
         makefile.parent.mkdir(parents=True)
