@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   ios:
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 360
     env:
       PACKAGE_IPA: '1'
@@ -30,11 +30,20 @@ jobs:
           brew install cmake ninja meson bison pkg-config autoconf automake libtool ccache llvm 2>&1 | tee work/ci/install.txt
           echo "$(brew --prefix bison)/bin" >> "$GITHUB_PATH"
           echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
-      - name: Select Xcode 26.6
-        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+      - name: Select Xcode 27.0
+        run: sudo xcode-select -s /Applications/Xcode_27.app
       - name: Record runner and SDK versions
         run: |
-          { sw_vers; uname -m; xcodebuild -version; xcrun --sdk iphoneos --show-sdk-version; brew list --versions; python3 --version; } > work/ci/host.txt
+          { sw_vers; uname -m; xcodebuild -version; xcrun swiftc --version; xcrun --sdk iphoneos --show-sdk-version; brew list --versions; python3 --version; cargo --version; rustc --version; } > work/ci/host.txt
+      - name: Validate bundled JIT framework compiler compatibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'import StikJIT\n' > work/ci/check-stikjit.swift
+          xcrun swiftc -typecheck -target arm64-apple-ios26.0 \
+            -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
+            -F app/Frameworks/StikJIT.xcframework/ios-arm64 \
+            work/ci/check-stikjit.swift 2>&1 | tee work/ci/stikjit-import.txt
       - name: Bootstrap toolchain and Wine headers
         shell: bash
         run: |

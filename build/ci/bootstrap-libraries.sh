@@ -51,6 +51,6 @@ cmake -S toolchains/llvm-project/llvm -B toolchains/llvm-ios-build -G Ninja \
 # transitive libraries. No unnecessary target backends or executable tools.
 cmake --build toolchains/llvm-ios-build --target LLVMBitWriter LLVMPasses
 for archive in toolchains/llvm-ios-build/lib/*.a; do
-    xcrun lipo -verify_arch arm64 "$archive"
+    xcrun lipo "$archive" -verify_arch arm64
 done
 shasum -a 256 toolchains/llvm-ios-build/lib/*.a > work/ci/llvm-ios-SHA256SUMS

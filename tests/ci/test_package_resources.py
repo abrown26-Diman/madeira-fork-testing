@@ -15,7 +15,7 @@ spec.loader.exec_module(verify)
 class PackageTest(unittest.TestCase):
     def fixture(self, root):
         app, source = root/'app', root/'source'
-        for name in verify.REQUIRED + ['nls/l_intl.nls']:
+        for name in verify.REQUIRED + ['nls/l_intl.nls', 'legal/NOTICE.txt']:
             for base in (app, source):
                 p = base/name
                 p.parent.mkdir(parents=True, exist_ok=True)

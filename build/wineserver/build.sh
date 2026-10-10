@@ -89,7 +89,7 @@ while IFS=$'\t' read -r name src; do
     fi
     # Rename definitions AND references, including previously inherited objects.
     "$OBJCOPY" "${RENAME_ARGS[@]}" "$OBJ_DIR/$name.o"
-    xcrun lipo -verify_arch arm64 "$OBJ_DIR/$name.o"
+    xcrun lipo "$OBJ_DIR/$name.o" -verify_arch arm64
     OBJECTS+=("$OBJ_DIR/$name.o")
 done < "$OBJ_DIR/sources.tsv"
 xcrun ar rcs "$OBJ_DIR/libwineserver.a" "${OBJECTS[@]}"

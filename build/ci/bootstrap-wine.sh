@@ -28,6 +28,8 @@ for arch in aarch64 arm64ec; do
     (
         cd "$B"
         ../configure --enable-archs="$arch" --without-x --disable-tests --enable-winegstreamer
-        make -j3 include
+        # Wine's generated makedep rules name this include/all. "include"
+        # alone matches the existing directory and silently builds nothing.
+        make -j3 include/all
     ) 2>&1 | tee "work/ci/wine-configure-$arch.txt"
 done

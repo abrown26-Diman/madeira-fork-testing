@@ -12,6 +12,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[2]
 REQUIRED = [
     'Madeira', 'Info.plist', 'prefix-template.tar.gz', 'madeira-jit.js',
+    'cacert.pem', 'Madeira JIT.shortcut', 'Assets.car',
     'Frameworks/StikJIT.framework/StikJIT',
     'PlugIns/MadeiraJITHelper.appex/MadeiraJITHelper',
     'd3d12/libmetalirconverter.dylib',
@@ -34,7 +35,7 @@ def validate_resources(app, source):
     if list((app/'x86_64-vcruntime').glob('*.dll')):
         raise ValueError('Microsoft runtime DLLs must not be included by CI')
     # Every staged PE, NLS and licence resource must survive Xcode's copy phases.
-    for folder in ('arm64ec-windows', 'aarch64-windows', 'i386-windows', 'nls', 'licenses'):
+    for folder in ('arm64ec-windows', 'aarch64-windows', 'i386-windows', 'nls', 'licenses', 'legal'):
         if not (source/folder).is_dir() or not any((source/folder).iterdir()):
             raise ValueError(f'empty source resource directory: {folder}')
         for p in (source/folder).rglob('*'):
@@ -59,7 +60,7 @@ def main():
     evidence = {}
     for name in native:
         path = args.app/name
-        subprocess.run(['xcrun', 'lipo', '-verify_arch', 'arm64', str(path)], check=True)
+        subprocess.run(['xcrun', 'lipo', str(path), '-verify_arch', 'arm64'], check=True)
         evidence[name] = subprocess.check_output(['xcrun', 'otool', '-L', str(path)], text=True)
     files = {p.relative_to(args.app).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
              for p in sorted(args.app.rglob('*')) if p.is_file()}

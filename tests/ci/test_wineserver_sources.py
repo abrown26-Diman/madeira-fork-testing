@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Madeira Converter Exception: see LICENSE-EXCEPTION.md
 import importlib.util
+import os
 from pathlib import Path
+import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -52,6 +55,43 @@ class WineserverSourcesTest(unittest.TestCase):
             (root/'build/wineserver/main_ios.c').unlink()
             with self.assertRaises(FileNotFoundError):
                 sources.plan(root)
+
+    @unittest.skipUnless(os.name == 'posix' and shutil.which('bash'), 'requires POSIX shell')
+    def test_compiler_or_objcopy_failure_preserves_existing_archive(self):
+        for failure in ('compiler', 'objcopy'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                self.fixture(root)
+                build = root/'build/wineserver'
+                for name in ('build.sh', 'sources.py'):
+                    shutil.copyfile(ROOT/'build/wineserver'/name, build/name)
+                target = root/'app/Madeira/libwineserver.a'
+                target.parent.mkdir(parents=True)
+                target.write_bytes(b'known working archive')
+                bindir = root/'bin'
+                bindir.mkdir()
+                marker = root/'archive-called'
+                xcrun = '''#!/bin/bash
+case "$*" in
+    *--show-sdk-path*) echo /mock-sdk; exit 0;;
+    *clang*)
+        if [ "$FAIL_STAGE" = compiler ]; then echo injected-compiler-error >&2; exit 42; fi
+        while [ "$1" != -o ]; do shift; done
+        printf mock-object > "$2"; exit 0;;
+    *ar*) touch "$ARCHIVE_MARKER"; exit 0;;
+esac
+exit 0
+'''
+                for name, content in [('xcrun', xcrun), ('llvm-objcopy', '#!/bin/sh\necho injected-objcopy-error >&2\nexit 43\n')]:
+                    (bindir/name).write_text(content)
+                    (bindir/name).chmod(0o755)
+                env = dict(os.environ, PATH=str(bindir)+os.pathsep+os.environ['PATH'],
+                           FAIL_STAGE=failure, ARCHIVE_MARKER=str(marker))
+                result = subprocess.run(['bash', str(build/'build.sh')], env=env, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(f'injected-{failure}-error', result.stderr)
+                self.assertEqual(target.read_bytes(), b'known working archive')
+                self.assertFalse(marker.exists())
 
 
 if __name__ == '__main__':
