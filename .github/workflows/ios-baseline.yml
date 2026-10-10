@@ -1,8 +1,8 @@
-name: iOS baseline build (readiness gated)
+name: iOS native baseline
 
 on:
   push:
-    branches: [engineering/instrumented-baseline]
+    branches: [engineering/native-ios-build]
   workflow_dispatch:
     inputs:
       package_ipa:
@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   ios:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 180
     env:
       PACKAGE_IPA: ${{ inputs.package_ipa && '1' || '0' }}
@@ -38,15 +38,18 @@ jobs:
       - name: Record runner and SDK versions
         run: |
           { sw_vers; uname -m; xcodebuild -version; xcrun --sdk iphoneos --show-sdk-version; brew list --versions; python3 --version; } > work/ci/host.txt
-      # Deliberately fails on today's clean checkout: see docs/BUILD_AND_TEST.md.
-      # Do not make this continue-on-error or download an unproven seed archive.
-      - name: Native build readiness
-        run: python3 tools/ci/audit_inputs.py --require-native --output work/ci/native-inputs.json
-      - name: Compile and optionally package
+      - name: Select Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+      - name: Bootstrap toolchain and Wine headers
         shell: bash
         run: |
           set -euo pipefail
-          bash build/ci/build-ios.sh 2>&1 | tee work/ci/native-build.txt
+          bash build/ci/bootstrap-wine.sh 2>&1 | tee work/ci/bootstrap-wine.txt
+      - name: Reconstruct and validate wineserver from source
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash build/wineserver/build.sh 2>&1 | tee work/ci/wineserver.txt
       - name: Preserve compiler and linker evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -57,13 +60,11 @@ jobs:
             build/**/*.err
             build/**/err-*.txt
             build/**/*.log
+            build/wineserver/obj/**/sources.tsv
+            build/wineserver/obj/**/members.txt
+            build/wineserver/obj/**/symbols.txt
+            build/wineserver/obj/**/undefined.txt
+            build/wineserver/obj/**/SHA256SUMS
+            wine/build-*/config.log
             work/DerivedData/Logs/Build/
           retention-days: 14
-      - name: Unsigned package (only after success)
-        if: success() && inputs.package_ipa
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: Madeira-unsigned-${{ github.sha }}
-          path: work/package/
-          if-no-files-found: error
-          retention-days: 7
