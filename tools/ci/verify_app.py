@@ -28,6 +28,8 @@ REQUIRED = [
 
 
 def validate_resources(app, source):
+    if any(app.rglob('*.mobileprovision')):
+        raise ValueError('unsigned CI package must not contain provisioning profiles')
     for name in REQUIRED:
         p = app/name
         if not p.is_file() or not p.stat().st_size:

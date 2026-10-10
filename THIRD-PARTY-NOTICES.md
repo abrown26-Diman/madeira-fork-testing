@@ -12,6 +12,7 @@ dependency license texts are in `LICENSES/`. See "Why GPL-3.0-or-later" below.
 
 | Component | Upstream license | **Madeira's fork** | Notes |
 |---|---|---|---|
+| **FreeType** 2.13.3 | FreeType License (FTL), with component notices | Unmodified source `42608f77f20749dd6ddc9e0536788eaad70ea4b5` | Statically merged into `libwin32u_unix.a`. Pinned by `build/ci/bootstrap-libraries.sh`; bundled notices in `app/Madeira/licenses/FreeType-2.13.3-NOTICES.txt`. Optional dependencies disabled by the existing build recipe. |
 | **Wine** | LGPL-2.1-or-later | **GPL-3.0-or-later** | Fork relicensed under LGPL-2.1 §3, which expressly permits applying the ordinary GPL to a copy. `ntdll`, `wineserver`, `win32u`, ARM64EC loader modified for iOS. |
 | **FEX-Emu** | MIT | upstream MIT + **modifications GPL-3.0-or-later** | Forked. x86-64 → ARM64 translation. |
 | **DXMT** | MIT | upstream MIT + **modifications GPL-3.0-or-later** | Forked. D3D11 → Metal. |

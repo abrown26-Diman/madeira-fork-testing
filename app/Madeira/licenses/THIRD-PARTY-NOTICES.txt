@@ -14,6 +14,8 @@ with the exception, (C) 2026 125hz. Source: https://github.com/125hz/madeira-doc
 statically linked LLVM/MinGW-w64 runtime are in arm64ec-windows/dock-notices.txt.
 
 Statically linked into the application binary:
+- FreeType 2.13.3: FreeType License (FTL); component notices and exact source
+  revision in FreeType-2.13.3-NOTICES.txt. Optional font dependencies disabled.
 - Wine (fork branch madeira-lgpl, from upstream wine-11.4): LGPL-2.1-or-later
   (LGPL-2.1.txt). Madeira's modifications: LGPL-2.1-or-later, (C) 2026 Will
   Faust. Source: the wine submodule of the Madeira repository.

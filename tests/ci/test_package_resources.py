@@ -50,6 +50,13 @@ class PackageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Microsoft runtime'):
                 verify.validate_resources(app, source)
 
+    def test_profile_cannot_leak_into_unsigned_artifact(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            app, source = self.fixture(Path(tmp))
+            (app/'embedded.mobileprovision').write_bytes(b'fixture profile')
+            with self.assertRaisesRegex(ValueError, 'provisioning profiles'):
+                verify.validate_resources(app, source)
+
 
 if __name__ == '__main__':
     unittest.main()
