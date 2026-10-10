@@ -46,9 +46,10 @@ class ReportTests(unittest.TestCase):
         self.assertEqual([f["kind"] for f in result["findings"]], ["background_gap", "freeze_gap"])
 
     def test_guest_exit_not_clean_app_exit(self):
-        result = self.analyze('[WineProc] Wine exited with code 0\nMADEIRA-EXIT: child.exe status=0xc0000005\n')
-        self.assertEqual(result["guest_exits"]["count"], 2)
+        result = self.analyze('[WineProc] Wine exited with code 0\nMADEIRA-EXIT: child.exe status=0xc0000005\n[WineProc] Wine exited with code -1073741819 (caught by longjmp)\n')
+        self.assertEqual(result["guest_exits"]["count"], 3)
         self.assertEqual(result["guest_exits"]["first_events"][1]["status"], 0xc0000005)
+        self.assertEqual(result["guest_exits"]["first_events"][2]["status"], -1073741819)
         self.assertEqual(result["application_termination"], "unknown")
 
     def test_memory_units_not_conflated_or_assumed(self):
@@ -104,7 +105,7 @@ class ReportTests(unittest.TestCase):
     def test_metadata_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'run.json'
-            for value in [[], {'account_token': 'x'}, {'test_duration_seconds': -1}, {'test_duration_seconds': True}, {'settings': {'pool': 512}}]:
+            for value in [[], {'account_token': 'x'}, {'test_duration_seconds': -1}, {'test_duration_seconds': True}, {'test_duration_seconds': 10**400}, {'test_duration_seconds': float('nan')}, {'settings': {'pool': 512}}]:
                 path.write_text(json.dumps(value), encoding='utf-8')
                 with self.assertRaises(ValueError):
                     report.read_metadata(path)

@@ -32,7 +32,7 @@ RULES = [
 ]
 RULES = [(name, re.compile(pattern, re.I), advice) for name, pattern, advice in RULES]
 CONTEXT = re.compile(r"\[(?:build|device|launch-route|steam-start|fex-config)\]|madeira\.cfg|Target exe:|DXMT_CONFIG|WINEDEBUG")
-EXIT = re.compile(r"(?:MADEIRA-EXIT:.*?status=|Wine exited with code\s+)(0x[0-9a-fA-F]+|[0-9]+)")
+EXIT = re.compile(r"(?:MADEIRA-EXIT:.*?status=|Wine exited with code\s+)(0x[0-9a-fA-F]+|-?[0-9]+)")
 MEMORY = re.compile(r"\b(phys_footprint|resident_size|rss|available|limit_remaining)\s*=\s*([0-9]+)\s*(MB|MiB)\b", re.I)
 METADATA_KEYS = {
     "game", "executable", "launch_route", "device_model", "ios_version", "runtime_version",
@@ -56,7 +56,7 @@ def read_metadata(path):
             if not isinstance(item, dict) or not all(isinstance(k, str) and isinstance(v, str) for k, v in item.items()):
                 raise ValueError("settings must map strings to strings")
         elif key == "test_duration_seconds":
-            if isinstance(item, bool) or not isinstance(item, (int, float)) or not math.isfinite(item) or item <= 0:
+            if isinstance(item, bool) or not isinstance(item, (int, float)) or not (0 < item <= sys.float_info.max):
                 raise ValueError("test_duration_seconds must be finite and positive")
         elif not isinstance(item, str):
             raise ValueError(f"{key} must be a string or null")
