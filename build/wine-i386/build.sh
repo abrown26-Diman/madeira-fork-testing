@@ -144,6 +144,7 @@ EOF
     cd "$D"
     if [ ! -f build-pe-i386/build.ninja ]; then
         SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" \
+        PATH="$(dirname "$(xcrun --sdk macosx --find clang)"):$PATH" \
         meson setup --cross-file "$X" --native-file build-osx.txt --buildtype release \
             -Dwine_build_path="$B" -Dwine_builtin_dll=true build-pe-i386
     fi

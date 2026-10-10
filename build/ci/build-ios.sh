@@ -44,15 +44,24 @@ xcrun -sdk iphoneos libtool -static -o build/dxmt-ios/libdxmt_combined.a \
     build/dxmt-ios/obj/*.o toolchains/llvm-ios-build/lib/*.a
 cp build/dxmt-ios/libdxmt_combined.a app/Madeira/
 if [ ! -e dxmt/toolchains ]; then ln -s ../toolchains dxmt/toolchains; fi
-meson setup dxmt/build-arm64ec dxmt -Dbuildtype=release \
-    -Dwine_build_path=../../wine/build-arm64ec --cross-file=dxmt/build-arm64ec-win.txt --native-file=dxmt/build-osx.txt
+# Meson resolves wine_build_path relative to dxmt's source root. Use an
+# absolute path and build its three source-declared import libraries first.
+make -C wine/build-arm64ec -j3 libs/winecrt0/arm64ec-windows/libwinecrt0.a \
+    dlls/ntdll/arm64ec-windows/libntdll.a dlls/dbghelp/arm64ec-windows/libdbghelp.a
+PATH="$(dirname "$CC"):$PATH" meson setup dxmt/build-arm64ec dxmt -Dbuildtype=release \
+    -Dwine_build_path="$R/wine/build-arm64ec" --cross-file=dxmt/build-arm64ec-win.txt --native-file=dxmt/build-osx.txt
 ninja -C dxmt/build-arm64ec
 for module in d3d11 dxgi winemetal; do
     cp "dxmt/build-arm64ec/src/$module/$module.dll" app/Madeira/arm64ec-windows/
 done
 cp dxmt/build-arm64ec/src/d3d10/d3d10core.dll app/Madeira/arm64ec-windows/
 bash build/madeira-d3d12/build-pe.sh
-bash build/madeira-dock/build.sh --check
+# That script writes out-pe only; stage the newly built runtime rather than
+# packaging the older tracked copies after a successful compile.
+for module in d3d12 madeira_d3d12 d3d12core; do
+    cp "build/madeira-d3d12/out-pe/$module.dll" app/Madeira/arm64ec-windows/
+done
+HOST_CC="$CC" bash build/madeira-dock/build.sh --check
 # Include the i386 farm, not an IPA that silently loses WoW64 support.
 bash build/wine-i386/build.sh
 bash build/fex-wow64/build.sh
