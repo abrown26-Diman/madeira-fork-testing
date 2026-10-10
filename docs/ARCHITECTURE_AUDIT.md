@@ -1,5 +1,8 @@
 # Madeira architecture audit — 2026-10-10
 
+Milestone 0.3 build-only update: the source plan now reconstructs wineserver from all 44 pinned Wine server C translation units plus four existing Madeira additions. Runtime code and all submodule revisions remain unchanged. See [WINESERVER_BUILD.md](WINESERVER_BUILD.md) for the exact object map and ABI renames. Native compilation/application linking status is tracked in [BUILD_AND_TEST.md](BUILD_AND_TEST.md); the initial seed-archive blocker below describes the historical script.
+
+
 ## Scope and provenance
 
 This is a source audit and Windows host test record, not a device compatibility certification. The foundation is [Madeira](https://github.com/willfaust/Madeira) at `48f976429c189f8396e23d251d8a82f43c705922`. No dependency pin or submodule source was changed. The engineering changes are intentionally confined to build safety, offline diagnostics, tests and documentation.

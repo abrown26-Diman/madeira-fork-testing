@@ -1,5 +1,8 @@
 # Engineering backlog — ordered by expected impact
 
+Milestone 0.3 priority: complete the native build on `engineering/native-ios-build` before any compatibility or optimization work. The seed-archive recipe has been replaced with an explicit source build, but must pass real compilation, final linking and runtime regression tests. Next gates: generated Wine headers and server archive; LLVM/FEX/native components; Xcode link and validated unsigned package. See [BUILD_AND_TEST.md](BUILD_AND_TEST.md).
+
+
 Priorities combine breadth, severity, evidence, effort and regression risk. An open upstream issue is a report, not confirmation that the current source reproduces it. See [UPSTREAM_ISSUE_REVIEW.md](UPSTREAM_ISSUE_REVIEW.md) for the full open-issue inventory. No proposed game fix is implemented without a reproducer.
 
 | Priority | Work item | Evidence and reach | Next action / acceptance test | Complexity / regression risk |

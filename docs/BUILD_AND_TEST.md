@@ -1,3 +1,54 @@
+# Build and test — Milestone 0.3 (in progress)
+
+No successful application build or IPA is claimed yet. The active branch is `engineering/native-ios-build`, based on `497f04430685bec284df536beff1a496cb7ff706`. Historical Milestone 0.2 findings below are retained as evidence; this section supersedes their build recipe.
+
+## Native workflow
+
+`.github/workflows/ios-baseline.yml` runs on the GitHub-hosted `xcode-27` arm64 image and explicitly selects Xcode 27.0. The existing StikJIT interface was produced with Swift 6.4; a real Swift import check now precedes the dependency build. Runner images and Homebrew packages remain moving inputs, so this is not yet a bit-reproducibility claim. Actions are pinned, submodules are recursively checked out at recorded gitlinks, credentials are not persisted, and no object/archive cache is restored. Host/SDK/compiler/package-manager versions are uploaded on each attempt.
+
+From a **fresh** macOS checkout with the workflow's host tools installed:
+
+```sh
+bash build/ci/bootstrap-wine.sh
+bash build/wineserver/build.sh
+bash build/ci/bootstrap-libraries.sh
+xcodebuild -downloadComponent MetalToolchain
+python3 tools/ci/audit_inputs.py --require-native --output work/ci/native-inputs.json
+PACKAGE_IPA=1 bash build/ci/build-ios.sh
+```
+
+Bootstrap refuses existing Wine/toolchain source destinations instead of overlaying a stale build. On Windows, push the dedicated branch to the fork to execute these commands on Actions. No local Mac or Apple signing credentials are needed for the unsigned build. `build-ios.sh` requires the bootstraps and reconstructed wineserver to have succeeded. It runs the original dependency scripts, Wine PE builds, native Wine shims, FEX, DXMT, native D3D12, pairing, Dock tests and WoW64 builds before `xcodebuild` in Debug (upstream's tested runtime configuration). The initial DXMT combined archive is explicitly created using the documented libtool merge.
+
+Wineserver is built from 48 known source objects, with no seed archive: see [Wineserver construction](WINESERVER_BUILD.md). The previously listed `wine/build-macos/include/wine/version.h` dependency was an audit error; it has no consumer or generation rule in the pinned tree. `config.h` and actual widl headers are generated from Wine configure plus `make include/all`.
+
+## New dependency provenance
+
+| Input | Exact revision / source | SHA-256 of downloaded bytes |
+|---|---|---|
+| LLVM-MinGW | [20260421 universal macOS toolchain](https://github.com/mstorsjo/llvm-mingw/releases/download/20260421/llvm-mingw-20260421-ucrt-macos-universal.tar.xz) | `bd85a3975723815cef28dbbd2ca2cb0c926f6b348a12a0453f39f7af273cb3f7` |
+| LLVM 15.0.7 | [8dfdcc7b7bf66834a761bd8de445840ef68e4d1a source archive](https://codeload.github.com/llvm/llvm-project/tar.gz/8dfdcc7b7bf66834a761bd8de445840ef68e4d1a) | `b7f15ee379144b0c26a64ff9a1f27d0ea341a0db0c91b71c66bbfa8b310788ac` |
+| FreeType 2.13.3 | [42608f77f20749dd6ddc9e0536788eaad70ea4b5 source archive](https://codeload.github.com/freetype/freetype/tar.gz/42608f77f20749dd6ddc9e0536788eaad70ea4b5) | `68ce87bb59ea209eb7350f41a94a27519ce16b37011b475a1e62d4abee154b66` |
+
+The toolchain hash is inherited from upstream Madeira and was verified by Actions run 38032706137. LLVM/FreeType hashes were measured from the exact official GitHub source archives after resolving their release tags to full commits, then pinned in the bootstrap. They are download-integrity pins, not claims of an upstream signature. LLVM receives only the documented `Darwin|iOS` dead-strip CMake correction; context must match exactly. Host llvm-tblgen generates the iOS headers; LLVMBitWriter and LLVMPasses build the same transitive component set requested by DXMT. Host Homebrew LLVM is used for tools such as Mach-O symbol rewriting, not linked as the iOS LLVM runtime.
+
+GMP/Nettle/GnuTLS and FFmpeg retain the tracked source tarballs and SHA256SUMS; the orchestration verifies the GnuTLS stack before extraction. Cargo uses its committed lockfile. The tracked Apple converter and StikJIT framework remain binary inputs with the existing notices and provenance limitations; neither is replaced or downloaded from an unrecorded source. CI does not fetch the Apple installer or Microsoft runtime DLLs. The ARM64EC/aarch64 farms still contain tracked modules beyond the documented rebuild subset; a complete clean reconstruction of every existing PE is a separate remaining provenance task, not something to claim from an app link.
+
+## Validation and packaging gates
+
+The wineserver build records exact members, architectures, global/undefined symbols and hash before atomically staging its output. A compiler or objcopy failure leaves the previous app archive intact. LLVM archives are checked for arm64. The final Xcode link must resolve native symbols; its result bundle and link maps are retained. Static archive undefined-symbol listings are evidence, not link success.
+
+After Xcode succeeds, `tools/ci/verify_app.py` checks native executables and arm64 architecture, JIT helper/framework, Wine/FEX/graphics DLL paths, NLS, certificates, shortcut, assets, notices and byte-for-byte copying of staged PE/NLS/legal resources. Only then can `Payload/Madeira.app` be packaged. The artifact includes a file hash manifest, native input manifest, dependency download ledger, original entitlement reference and IPA SHA-256. An unsigned IPA may contain upstream ad-hoc signatures; none authorizes installation on the user's device.
+
+## Signing and first device test
+
+1. Download the successful unsigned artifact and verify its SHA-256. If no successful artifact exists, do not treat build-evidence logs as a package.
+2. Use the user's existing authorized signing/sideloading tool, such as SideStore, with a valid device provisioning profile. Keep signing credentials, certificates, profiles and pairing files out of Git and Actions artifacts.
+3. Sign the app, `PlugIns/MadeiraJITHelper.appex`, `Frameworks/StikJIT.framework`, and `d3d12/libmetalirconverter.dylib` consistently. Keep the helper's bundle identifier related to the main app identifier, and verify nested components survive the sideloader.
+4. Compare the effective signed entitlements with the original reference: `get-task-allow`, `com.apple.security.cs.allow-jit`, and `com.apple.developer.kernel.increased-memory-limit`. Provisioning capabilities vary; an entitlement appearing in the source plist does not guarantee the signer or device will grant it. Record the actual result without changing JIT requirements.
+5. Install standalone first, enable Developer Mode and follow [the existing JIT setup](JIT.md). Confirm JIT initialization, Wine desktop, input/audio and a known-working game with disposable test data before LiveContainer comparisons. Installing or launching alone does not establish game compatibility.
+
+## Milestone 0.2 historical record
+
 # Build and test record â€” 2026-10-10
 
 ## Status
