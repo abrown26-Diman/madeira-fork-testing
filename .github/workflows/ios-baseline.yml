@@ -49,13 +49,14 @@ jobs:
         run: |
           set -euo pipefail
           bash build/ci/bootstrap-wine.sh 2>&1 | tee work/ci/bootstrap-wine.txt
-      - name: Validate native FEX cross-configuration before LLVM build
+      - name: Validate both FEX cross-configurations before LLVM build
         shell: bash
         run: |
           set -euo pipefail
           export CC="$(xcrun --sdk macosx --find clang)"
           export CXX="$(xcrun --sdk macosx --find clang++)"
           bash build/fex-ios/build.sh --configure-only 2>&1 | tee work/ci/fex-configure.txt
+          bash build/fex-arm64ec/build.sh --configure-only 2>&1 | tee work/ci/fex-arm64ec-configure.txt
       - name: Reconstruct and validate wineserver from source
         shell: bash
         run: |

@@ -31,6 +31,7 @@ printf '%s\\n' "$*" >> "$CALL_LOG"
 [[ " $* " == *" -DCMAKE_SYSTEM_NAME=iOS "* ]] || exit 40
 [[ " $* " == *" -DCMAKE_SYSTEM_PROCESSOR=arm64 "* ]] || exit 41
 [[ " $* " == *" -DCMAKE_OSX_ARCHITECTURES=arm64 "* ]] || exit 42
+[[ " $* " == *" -DTUNE_CPU=none "* ]] || exit 43
 exit "$FAIL_CONFIGURE"
 ''')
                 command.chmod(0o755)
