@@ -1,0 +1,28 @@
+PASS: page order: Desktop, then Steam, then Other games
+PASS: Other games is a section exactly when the Steam section is shown; installed Steam games come first
+PASS: Not installed follows Other games; with nothing installed the whole Steam section does
+PASS: without the Steam section: one grid of the games you added, or the empty-library message
+PASS: pull down on the library refreshes the Steam section
+PASS: Other games: count and a collapsible title (MADEIRA_LIBRARY_COLLAPSE)
+PASS: Other games: no Add a game button of its own; the + in the navigation bar opens the executable browser
+PASS: Other games: empty and no-match texts
+PASS: Other games: collapsed, empty, then the games
+PASS: Other games: remembered collapsed state
+PASS: Other games: the games you added (no Steam game, no desktop), filtered by the search
+PASS: Other games: the library's layout
+PASS: Steam: installed count and a collapsible title
+PASS: Steam: a progress indicator while the library refreshes
+PASS: Steam: remembered states (installed shown, Not installed open by default)
+PASS: MADEIRA_LIBRARY_COLLAPSE (on by default) makes the titles collapsible
+PASS: Steam order: title, sign-in, downloading + installed, empty text, Not installed
+PASS: Steam: empty-library text
+PASS: Steam: the empty text only when signed in, loaded, nothing owned to install and no search
+PASS: Not installed: signed in, folds on its own, not with the Steam title
+PASS: Steam: the search, the groups and the library's Sort by apply
+PASS: the sign-in card
+PASS: Steam cards: the library's list and compact list rows
+PASS: log line [library-sections]
+PASS: the log line has flags only
+PASS: docs/LIBRARY.md: the sections and the switch
+PASS: docs/STEAM_LIBRARY.md: pull down to refresh
+check-library-sections: PASS

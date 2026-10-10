@@ -1,0 +1,8 @@
+ConfigCatalog.generated.swift is current
+ok   swap sizes include 3072
+ok   coverage picker: large-only default, blocks, wide
+ok   JIT pool and video memory pickers in Memory & sync
+ok   eco mode toggle in Memory & sync, off unless set
+ok   catalog lists swap-mb with a 3 GB choice
+ok   catalog lists env.MADEIRA_SWAP_COVERAGE
+PASS

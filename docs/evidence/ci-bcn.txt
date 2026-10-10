@@ -1,0 +1,16 @@
+=== building bcn-host-test (g++) ===
+-rwxr-xr-x 1 runner runner 29608 Oct 10 06:38 /home/runner/work/madeira-fork-testing/madeira-fork-testing/tests/dxmt/out-host/bcn-host-test
+
+=== running ===
+=== dxmt BCn decoder host test ===
+BC1 four-colour mode (c0 > c1)
+BC1 three-colour punch-through mode (c0 <= c1)
+BC2 explicit 4-bit alpha
+BC3 interpolated alpha, eight-value mode (a0 > a1)
+BC3 interpolated alpha, six-value mode (a0 <= a1)
+BC4 / BC5 scalar blocks
+odd extents: partial blocks are clipped, not written past
+tiny levels: 2x2 and 1x1 are still one whole block
+DXT2/DXT4 share DXT3/DXT5 layout (premultiply is not a decode)
+=== 47 checks, 0 failures ===
+PASS

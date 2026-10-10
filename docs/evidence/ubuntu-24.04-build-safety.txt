@@ -1,0 +1,9 @@
+test_binary_hashes_identify_changes_without_claiming_build (test_audit_inputs.AuditTests.test_binary_hashes_identify_changes_without_claiming_build) ... ok
+test_nested_pin_and_dirty_tracking (test_audit_inputs.AuditTests.test_nested_pin_and_dirty_tracking) ... ok
+test_uninitialized_gitlink_does_not_resolve_parent_head (test_audit_inputs.AuditTests.test_uninitialized_gitlink_does_not_resolve_parent_head) ... ok
+test_compile_failure_preserves_archive_and_negative_control_detects_old_bug (test_build_safety.BuildFailureTest.test_compile_failure_preserves_archive_and_negative_control_detects_old_bug) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.227s
+
+OK

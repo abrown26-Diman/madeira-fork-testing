@@ -1,0 +1,33 @@
+PASS: StikDebug uses the canonical enable-jit URL
+PASS: StikDebug request targets the current PID and carries Madeira's script
+PASS: the bundled JavaScript file is the single script source
+PASS: StikDebug attach has a finite 90-second readiness timeout
+PASS: readiness requires CS_DEBUGGED and a live debugger
+PASS: Automatic prefers installed StikDebug, then Built-in StikJIT
+PASS: the coordinator routes each selected JIT method once, after the loopback check
+PASS: JIT setup is reachable from the main flow and Settings
+PASS: pairing import rejects ordinary lockdown plists before invoking StikJIT
+PASS: the app starts the helper extension by the helper's own bundle ID in this installation
+PASS: no ExtensionKit extension point is declared or looked up (iOS registers none for a renamed install)
+PASS: the request (PID, pairing data, script) goes in the extension request, the answer in the item it completes with
+PASS: the helper attaches to Madeira and forces its custom script
+PASS: built-in JIT is disabled under LiveContainer
+PASS: Xcode project contains MadeiraJITHelper.appex in Embed JIT Helper
+PASS: Xcode project contains madeira-jit.js in Resources
+PASS: Xcode project contains JITBuiltInMessages.swift in Helper Sources
+PASS: Xcode project contains Frameworks/StikJIT.xcframework/ios-arm64
+PASS: StikJIT links on device only, with a simulator-safe helper stub
+PASS: the app may detect the canonical StikDebug URL scheme
+PASS: the helper is a classic app extension in PlugIns, as LiveContainer's LiveProcess
+PASS: one setting, MADEIRA_BUNDLE_IDENTIFIER, names the app and the helper
+PASS: a reset connection reads as a rejected pairing; refused, timed out or unreachable as LocalDevVPN
+PASS: Check setup and Enable JIT both explain connection problems
+PASS: the library's JIT error offers Pair Again and LocalDevVPN (or the shortcut)
+PASS: the library's error alert is on the tab view, shown on the Settings tab as well
+PASS: LocalDevVPN opens to connect and returns to Madeira's own URL scheme
+PASS: Play without JIT enables it (a second Play while it runs only replaces the game)
+PASS: the waiting game starts once, only when JIT came on and nothing else started
+PASS: the Play button reads Starting JIT with a spinner meanwhile; the details page stays up for it, and closes for JIT setup
+PASS: every way Enable JIT ends settles the waiting game
+PASS: Play and Dock starts continue after JIT without repeating the checks already passed
+check-jit-method: PASS

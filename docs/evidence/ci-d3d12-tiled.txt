@@ -1,0 +1,29 @@
+ok   d3d12-tiled-resources defaults to 0
+ok   d3d12-reserved-max-mb defaults to 1024
+ok   logged once, only when on
+ok   device_CreateReservedResource: the stub, unchanged, when the key is off
+ok   device_CreateReservedResource1: the stub, unchanged, when the key is off
+ok   device_CreateReservedResource2: the stub, unchanged, when the key is off
+ok   device_GetResourceTiling: the stub, unchanged, when the key is off
+ok   queue_UpdateTileMappings: the stub, unchanged, when the key is off
+ok   queue_CopyTileMappings: the stub, unchanged, when the key is off
+ok   OPTIONS: Tier 2 and 40 VA bits only behind the key
+ok   OPTIONS: the default answer still leaves both at zero (memset)
+ok   FORMAT_SUPPORT: R32G32B32 vertex formats only behind the key, nothing but IA_VERTEX_BUFFER
+ok   vtable: g_device_vtbl.CreateReservedResource
+ok   vtable: g_device_vtbl.CreateReservedResource1
+ok   vtable: g_device_vtbl.CreateReservedResource2
+ok   vtable: g_device_vtbl.GetResourceTiling
+ok   vtable: g_queue_vtbl.UpdateTileMappings
+ok   vtable: g_queue_vtbl.CopyTileMappings
+ok   reserved resources: refused above the cap with E_OUTOFMEMORY, before anything is allocated
+ok   reserved resources: a NULL out is the documented capability test (S_FALSE)
+ok   reserved resources: backed as a committed resource in a DEFAULT heap
+ok   reserved resources: marked as reserved (GetResourceTiling answers only for them)
+ok   GetResourceTiling: packed subresources are D3D12_PACKED_TILE with zero size
+ok   GetResourceTiling: slice s starts at s x tiles-per-slice
+ok   GetResourceTiling: packed mips start after slice 0's standard mips
+ok   GetResourceTiling: a buffer has no mip information
+ok   tiling harness compiles
+ok   standard tile shapes, Tier 2 packing, slices, buffers (tiling harness ok)
+PASS

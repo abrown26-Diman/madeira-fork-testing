@@ -11,7 +11,7 @@ This is a source audit and Windows host test record, not a device compatibility 
 | DXMT | `db546ee466ad50ec6463edb5fa183de11db43761` | `ios-port`, describe `v0.73-151-gdb546ee` |
 | Madeira Dock | `72558e416a390f3669457930f09a389e54f49556` | Dedicated x86-64 PE Steam host, staged in the ARM64EC farm and translated by FEX |
 
-[source-inputs.json](evidence/source-inputs.json) records every discovered nested gitlink, its expected/actual revision, dirty state, missing inputs and hashes of bundled PE/converter binaries. There are 24 discovered gitlinks including the four above. Windows initialized 21 at the required revisions; three optional Linux-only FEX test-binary repositories were not fetched. CI requests all recursive submodules. A source SHA does not prove that the already tracked DLLs were built from that SHA.
+[source-inputs.json](evidence/source-inputs.json) records every discovered nested gitlink, its expected/actual revision, dirty state, missing inputs and hashes of bundled PE/converter binaries. There are 24 discovered gitlinks including the four above. Windows initialized 21 at the required revisions; three optional Linux-only FEX test-binary repositories were not fetched. The completed recursive Linux CI checkout verified all 24 at their exact pins with no tracked modifications; see [ci-source-inputs.json](evidence/ci-source-inputs.json). A source SHA does not prove that the already tracked DLLs were built from that SHA.
 
 Read: README, CONTRIBUTING, COPYING, LICENSE-EXCEPTION, THIRD-PARTY notices, BUILDING, LICENSING, Wine provenance, JIT, WoW64, Steam/library/cloud, media and controller docs; dependency build scripts and contribution notices. The older BUILDING claim that fork revisions have not been published is historical: the required initialized revisions were fetched in this audit. Its UNVERIFIED build steps remain unverified here.
 
@@ -75,6 +75,8 @@ Diagnostic modes for this milestone are offline summary (default), bounded excer
 ## Findings and performance hypotheses
 
 Verified source/build problems: missing clean wineserver archive recipe; first-run ARM64EC toolchain triple absent from the wrapper; ntdll build could archive old objects after compile failures; config catalog used OS-dependent path separators; `wintypes.dll` absent from the packaged ARM64EC farm despite available Wine source. Only the small wrapper/catalog defects are changed here.
+
+The subsequent full host sweep reproduced two macOS behavioral assertions: Swift/C disagreement for BOM-prefixed configuration and a case-sensitive expected spelling in the installer resolver test. The latter may be a test expectation on a case-insensitive filesystem rather than failed file access. Neither is declared an iOS bug or fixed without isolation. See [HOST_TEST_FINDINGS.md](HOST_TEST_FINDINGS.md) for the complete result and platform/harness limitations.
 
 Unmeasured hypotheses: translated-code compilation/cache churn, cross-guest lock contention, alias/protection churn, shader/pipeline compilation, Metal submission waits, resource uploads and memory-pressure/thermal effects may dominate different games. No hotspot ranking or FPS improvement is claimed. Use the experiment protocol in [PERFORMANCE_BASELINE.md](PERFORMANCE_BASELINE.md).
 

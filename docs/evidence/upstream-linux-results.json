@@ -1,0 +1,512 @@
+[
+  {
+    "test": "check-audio-downmix.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.47,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-audio-wow64.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.17,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-cfg-early-docs.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 32.8,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-cfg-game.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-child-desktop.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-child-ntdll-alias.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-config-catalog.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 9.24,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-control-presets.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 2.42,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-d3d12-tiled.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-d3d9-splitlock.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 3.02,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-d9-upload-commit.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.97,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-components.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.37,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-contract.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 4.63,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-gdi-section.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-installers.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 2.87,
+    "explicit_skips": [
+      "SKIP: cmd.exe not reachable; batch flow checked textually only"
+    ],
+    "result": "PARTIAL"
+  },
+  {
+    "test": "check-dock-path.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.42,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-report.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.62,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-dock-start-screen.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.72,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-ec-conhost.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.16,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-fastsync.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 37.6,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-filtering-cap.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.12,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-free-delay.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-frontend.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 4.18,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-gamepad.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-hardware-input.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.07,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-hidpad.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.92,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-hw-registry.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 6.33,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-iat-sync-owner.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.16,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-image-reload.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.26,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-image-retire.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-jit-method.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-jit-network.py",
+    "exit_code": 1,
+    "timeout": false,
+    "seconds": 1.37,
+    "explicit_skips": [],
+    "result": "NONZERO"
+  },
+  {
+    "test": "check-jit-pairing.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 35.67,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-kmt-adapter.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.31,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-launch-routing.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-lazy-windows.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 3.37,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-library-api.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.77,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-library-groups.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.22,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-library-sections.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.03,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-nav-keys.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-nsi-network.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.77,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-onboarding.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.82,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-pad-output.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.26,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-readonly-link.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-runtime-settings.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 1.57,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-scene-batching.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.77,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-section-abort.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.32,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-small-va-band.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-stale-heal-owner.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.21,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-steam-cloud.py",
+    "exit_code": 1,
+    "timeout": false,
+    "seconds": 0.42,
+    "explicit_skips": [],
+    "result": "NONZERO"
+  },
+  {
+    "test": "check-steam-games.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 3.72,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-steam-library.py",
+    "exit_code": 1,
+    "timeout": false,
+    "seconds": 15.75,
+    "explicit_skips": [],
+    "result": "NONZERO"
+  },
+  {
+    "test": "check-steam-signin-native.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 5.63,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-swap-coverage.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.36,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-touch-gamepad.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.57,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-unixlib-binder.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.16,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-wg-parser.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 28.31,
+    "explicit_skips": [
+      "SKIP: no real MP3 available (set MADEIRA_TEST_MP3)"
+    ],
+    "result": "PARTIAL"
+  },
+  {
+    "test": "check-win32u-zero-bits.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.16,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-wine-mono.py",
+    "exit_code": 1,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "NONZERO"
+  },
+  {
+    "test": "check-wma-decoder.py",
+    "exit_code": 1,
+    "timeout": false,
+    "seconds": 0.06,
+    "explicit_skips": [
+      "SKIP-FAIL: /home/runner/work/madeira-fork-testing/madeira-fork-testing/wine/build-macos/include/config.h is missing; point MADEIRA_WINE_BUILD at a configured Wine tree"
+    ],
+    "result": "NONZERO"
+  },
+  {
+    "test": "check-wow-context.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.11,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-wow-cpu-area.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.26,
+    "explicit_skips": [],
+    "result": "PASS"
+  },
+  {
+    "test": "check-wow-sweep.py",
+    "exit_code": 0,
+    "timeout": false,
+    "seconds": 0.82,
+    "explicit_skips": [],
+    "result": "PASS"
+  }
+]

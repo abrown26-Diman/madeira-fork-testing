@@ -1,0 +1,20 @@
+test_background_gap_not_gameplay_freeze (test_report.ReportTests.test_background_gap_not_gameplay_freeze) ... ok
+test_cli_exports_and_refuses_overwrite (test_report.ReportTests.test_cli_exports_and_refuses_overwrite) ... ok
+test_evidence_is_bounded_during_fault_storm (test_report.ReportTests.test_evidence_is_bounded_during_fault_storm) ... ok
+test_excerpts_opt_in_with_common_credential_redaction (test_report.ReportTests.test_excerpts_opt_in_with_common_credential_redaction) ... ok
+test_frame_statistics_and_sample_scope (test_report.ReportTests.test_frame_statistics_and_sample_scope) ... ok
+test_guest_exit_not_clean_app_exit (test_report.ReportTests.test_guest_exit_not_clean_app_exit) ... ok
+test_invalid_frames_rejected (test_report.ReportTests.test_invalid_frames_rejected) ... ok
+test_known_failure_signatures_and_line_numbers (test_report.ReportTests.test_known_failure_signatures_and_line_numbers) ... ok
+test_markdown_cannot_escape_json_fence (test_report.ReportTests.test_markdown_cannot_escape_json_fence) ... ok
+test_memory_units_not_conflated_or_assumed (test_report.ReportTests.test_memory_units_not_conflated_or_assumed) ... ok
+test_metadata_validation (test_report.ReportTests.test_metadata_validation) ... ok
+test_multiple_sessions_warn_without_guessing_attribution (test_report.ReportTests.test_multiple_sessions_warn_without_guessing_attribution) ... ok
+test_no_false_success_from_empty_or_quiet_log (test_report.ReportTests.test_no_false_success_from_empty_or_quiet_log) ... ok
+test_oversized_line_skipped_and_following_line_kept (test_report.ReportTests.test_oversized_line_skipped_and_following_line_kept) ... ok
+test_truncation_invalid_utf8_and_hash (test_report.ReportTests.test_truncation_invalid_utf8_and_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.158s
+
+OK
