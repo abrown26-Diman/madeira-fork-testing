@@ -15,8 +15,11 @@ printf '%s\t%s\n' "$SHA" "$URL" > work/ci/downloads.tsv
 test ! -e "toolchains/$TC"
 tar -xJf "work/downloads/$TC.tar.xz" -C toolchains
 export PATH="$R/toolchains/$TC/bin:$PATH"
-export CC="$(xcrun --sdk macosx --find clang)"
-export CXX="$(xcrun --sdk macosx --find clang++)"
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+# Direct toolchain clang has no implicit SDK when invoked outside xcrun.
+# Persist the sysroot in Wine's Makefile as well as this configure process.
+export CC="$(xcrun --sdk macosx --find clang) -isysroot $SDKROOT"
+export CXX="$(xcrun --sdk macosx --find clang++) -isysroot $SDKROOT"
 for arch in aarch64 arm64ec; do
     B="$R/wine/build-$arch"
     [ "$arch" != aarch64 ] || B="$R/wine/build-macos"
