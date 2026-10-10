@@ -12,6 +12,7 @@ case "${1:-}" in ''|--configure-only) ;; *) echo "usage: $0 [--configure-only]" 
     cmake -S "$R/FEX" -B "$B" -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_OSX_ARCHITECTURES=arm64 \
         -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_DEPLOYMENT_TARGET=17.0 -DCMAKE_BUILD_TYPE=Release \
         -DTUNE_ARCH=generic -DTUNE_CPU=none \
+        -DCMAKE_DISABLE_FIND_PACKAGE_fmt=ON \
         -DBUILD_TESTING=OFF -DBUILD_THUNKS=OFF -DBUILD_FEXCONFIG=OFF -DBUILD_FEX_LINUX_TESTS=OFF \
         -DENABLE_FEX_ALLOCATOR=OFF -DENABLE_ASSERTIONS=OFF -DENABLE_CLANG_THUNKS=ON -DENABLE_CCACHE=ON
 if [ "${1:-}" = --configure-only ]; then exit 0; fi
